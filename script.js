@@ -1,10 +1,4 @@
-/*
- * @Author: Jiang Menghao
- * @Date: 2022-01-22 20:34:17
- * @LastEditTime: 2022-06-05 19:48:16
- * @LastEditors: Jiang Menghao
- * @FilePath: /vip-private/script.js
- */
+
 let form = document.querySelector('form')
 let returnBtn = document.querySelector('.card-back .return')
 let timerBtn = document.querySelector('.card-back .timer')
