@@ -9,8 +9,6 @@ let timer60 = document.querySelector('.set-timer-60')
 let timer90 = document.querySelector('.set-timer-90')
 let cancelBtn = document.querySelector('.cancel-btn')
 let delay
-let promotion = document.querySelector('.promotion')
-let promotionList = []
 
 window.onresize = function () {
   document.body.style.minHeight = window.innerHeight + 'px'
@@ -24,10 +22,8 @@ form.addEventListener('submit', (e) => {
   let api = "https://jx.xmflv.com/?url="
   let card = document.querySelector('.card')
   let player = document.querySelector('.player')
-
   mediaInput.blur()
   card.classList.add('turn-to-back')
-  promotion.classList.remove('show')
   delay = window.setTimeout(function () {
     player.src = api + mediaURL
   }, 800)
@@ -37,9 +33,6 @@ form.addEventListener('submit', (e) => {
     card.classList.remove('turn-to-back')
     mediaInput.value = ''
     window.clearTimeout(delay)
-    if (promotionList.length > 0) {
-      promotion.classList.add('show')
-    }
   })
 })
 
