@@ -1,10 +1,4 @@
-/*
- * @Author: Jiang Menghao
- * @Date: 2022-01-22 20:34:17
- * @LastEditTime: 2022-06-05 19:48:16
- * @LastEditors: Jiang Menghao
- * @FilePath: /vip-private/script.js
- */
+
 let form = document.querySelector('form')
 let returnBtn = document.querySelector('.card-back .return')
 let timerBtn = document.querySelector('.card-back .timer')
@@ -18,68 +12,6 @@ let delay
 let promotion = document.querySelector('.promotion')
 let promotionList = []
 
-function collectVideoLink (videoLink) {
-  fetch('https://vip-api.heimaokeji.xyz/api/video/submitVideoLink', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      videoLink
-    })
-  })
-}
-
-async function getPromotionInfo () {
-  const response = await fetch('https://vip-api.heimaokeji.xyz/api/promotion/getPromotion', {
-    method: 'GET'
-  }).then(res => res.json())
-  if (response.promotionList && response.promotionList.length > 0) {
-    promotionList = response.promotionList
-    promotion.classList.add('show')
-    document.querySelector('.promotion-poster>span').innerHTML = promotionList[0].discount
-    document.querySelector('.promotion-poster>img').src = promotionList[0].image
-    document.querySelector('.promotion-body .title>h3').innerHTML = promotionList[0].title
-    document.querySelector('.promotion-body>span').innerHTML = promotionList[0].subtitle
-    document.querySelector('.promotion-footer>span').innerHTML = promotionList[0].date
-    document.querySelector('.promotion-footer>a').href = promotionList[0].link
-    document.querySelector('#promotion-qr h3').innerHTML = '手机' + promotionList[0].app + '扫一扫'
-    
-    const canvas = document.querySelector('.qrcode')
-    QRCode.toCanvas(canvas, promotionList[0].link, function (error) {
-      if (error) console.error(error)
-    })
-  }
-}
-
-getPromotionInfo()
-
-async function getRedPocketInfo () {
-  const response = await fetch('https://vip-api.heimaokeji.xyz/api/redPocket/getRedPocket', {
-    method: 'GET'
-  }).then(res => res.json())
-  if (response.redPocket && response.redPocket.length > 0) {
-    // 一个红包都没开启，则直接隐藏本区域
-    if (response.redPocket.every((item) => !item.visible)) {
-      const redPocketEl = document.querySelector('.red-pockets')
-      redPocketEl.classList.add('hidden')
-    }
-    // 至少有一个红包开启
-    else {
-      const buttons = document.querySelectorAll('.red-pockets>a')
-      response.redPocket.forEach((item, index) => {
-        if (item.visible) {
-          buttons[index].href = item.link
-        } else {
-          buttons[index].classList.add('hidden')
-        }
-      })
-    }
-  }
-}
-
-getRedPocketInfo()
-
 window.onresize = function () {
   document.body.style.minHeight = window.innerHeight + 'px'
 }
@@ -92,9 +24,6 @@ form.addEventListener('submit', (e) => {
   let api = "https://jx.xmflv.com/?url="
   let card = document.querySelector('.card')
   let player = document.querySelector('.player')
-
-  // collect video link typed by user
-  collectVideoLink(mediaURL)
 
   mediaInput.blur()
   card.classList.add('turn-to-back')
